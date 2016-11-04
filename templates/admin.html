@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block body %}
+<div id="main" class="container">
+    <h2>All Items</h2>
+    <table class="table table-hover">
+      <tr>
+        <th>#
+        <th>Title
+        <th>Date
+        <th>Text
+      {%- for user in users %}
+      <tr class="success">
+        <td><a href="/admin/{{ user._id }}">{{ user._id}}</a>
+        <td >{{ user.name }}
+       <td >{{ user.login }}
+        <td>{{ user.password }}</td>
+      {%- endfor %}
+    </table>
+    <p>
+      <a href="{{ url_for('new') }}" class="btn btn-large btn-primary">Novo Admin</a>
+ 
+ 
+</div>
+{% endblock %}

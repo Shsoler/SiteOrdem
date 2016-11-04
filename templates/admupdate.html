@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block body %}
+  <form action="" method=post class="form-horizontal">
+    <h2>Atualizar Administrador</h2>
+    <div class="control-group">
+        <div class="controls">
+          <input type="text" id="name" name="name" class="input-xlarge"
+            placeholder="Nome value="{{ user.name }}"
+            required>
+        </div>
+    </div>
+ 
+    <div class="control-group">
+        <div class="controls">
+          <input type="text" id="login" name="login" class="input-xlarge"
+            placeholder="Login" value="{{ user.login }}"
+            required>
+        </div>
+    </div>
+ 
+    <div class="control-group">
+        <div class="controls">
+          <input type="text" id="password" name="password" class="input-xlarge"
+            placeholder="Senha" value="{{ user.password }}"
+            required>
+        </div>
+    </div>
+ 
+ 
+    <div class="control-group">
+        <div class="controls">
+          <button type="submit" class="btn btn-success">Atualizar</button>
+          <a href="{{ url_for('admin') }}">Voltar</a>
+        </div>
+    </div>
+  </form>
+{% endblock %}
