@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block body %}
+  <form action="" method=post class="form-horizontal">
+    <h2>Novo Post</h2>
+    <div class="control-group">
+        <div class="controls">
+          <input type="text" id="titulo" name="titulo" class="input-xlarge"
+            placeholder="Name" value="{{ request.form.titulo }}"
+            required>
+        </div>
+    </div>
+
+     <div class="control-group">
+        <div class="controls">
+            <textarea name="descricao" id="descricao" cols="50" rows="5">
+            Digite seu post
+            </textarea>
+        </div>
+    <div class="control-group">
+        <div class="controls">
+          <button type="submit" class="btn btn-success">Criar Administrador</button>
+          <a href="{{ url_for('index') }}">Index</a>
+        </div>
+    </div>
+  </form>
+{% endblock %}

@@ -38,7 +38,26 @@ class User(db.Model):
 	def __repr__(self):
 		return '<User %r>' % (self.name)
 
+class Post(db.Model):
+	__tablename__ = 'post'
+
+	_id = db.Column(db.Integer, primary_key=True,autoincrement=True)
+	data = db.Column(db.DateTime)
+	titulo = db.Column(db.String(80))
+	descricao = db.Column(db.String(300))
+
+	def __init__(self,titulo,descricao):
+		self.data = datetime.utcnow()
+		self.titulo = titulo
+		self.descricao = descricao
+
+
 db.create_all()
+
+user = User("admin","admin","admin")
+db.session.add(user)
+db.session.commit()
+
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -50,9 +69,39 @@ def load_user(id):
 	return User.query.get(int(id))
 
 @app.route('/')
-@app.route('/hello')
+@app.route('/index')
 def index():
 	return "hello"
+
+@app.route('/home')
+def home():
+	return render_template("home.html",posts = Post.query.all())
+
+@app.route('/newpost', methods =['GET','POST'])
+def newpost():
+	if request.method == 'POST':
+		post = Post(request.form["titulo"],request.form['descricao'])
+		db.session.add(post)
+		db.session.commit()
+	return render_template('newpost.html')
+
+@app.route('/newpost/<int:post_id>',methods=['GET','POST'])
+def updatePost(post_id):
+	post_item = Post.query.get(post_id)
+	if request.method == 'GET':
+		return render_template('postupdate.html',post = post_item)
+	post_item.titulo = request.form['titulo']
+	post_item.descricao = request.form['descricao']
+	post_item.done = ('done.%d' % post_id) in request.form
+	db.session.commit()
+	return redirect(url_for('home'))
+
+@app.route('/newpost/delete/<int:post_id>',methods=['GET','POST'])
+def deletePost(post_id):
+	post_item = Post.query.get(post_id)
+	db.session.delete(post_item)
+	db.session.commit()
+	return redirect(url_for('home'))
 
 
 @app.route('/new',methods=['GET','POST'])
@@ -67,7 +116,6 @@ def new():
 
 
 @app.route('/admin/')
-@login_required
 def admin():
 
 	return render_template('admin.html',
@@ -115,3 +163,4 @@ def before_request():
 if __name__ == '__main__':
 	app.secret_key = 'super secret key'
 	app.run()
+

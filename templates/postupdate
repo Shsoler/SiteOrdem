@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block body %}
+			<form>
+				<div id="main" class="container">
+				    <h2>All Items</h2>
+				    <table class="table table-hover">
+					    	<tr>
+					    {%- for post in posts %}
+					        <th>{{post.titulo}}
+               				 {% if g.user.is_authenticated%}
+					        <tr>
+					        	<td><a href="/newpost/{{ post._id }}">{{ post._id}}</a>
+					        </tr>
+					        {% endif%}
+					        <tr>
+					        	<td>{{ post.data}}
+					        </tr>
+					        <tr>
+					        	<td>{{ post.descricao }}
+					        </tr>
+					     {%- endfor %}
+				  		</tr>
+				    </table>
+				    <p>
+				      <a href="{{ url_for('newpost') }}" class="btn btn-large btn-primary">Novo Post</a>
+				</div>
+			</form>
+{% endblock %}
