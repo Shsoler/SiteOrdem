@@ -1,0 +1,63 @@
+criar:
+	CRUD
+	X	Post
+	X		Data
+	X		Titulo
+	X		Descriçao
+
+
+	CRUD
+		Instituição
+			id
+			nome
+			tel
+			end
+		Função
+			id
+			Descrição
+		Equipamento
+			id
+			Descrição
+		Categoria
+			id
+			Descrição
+		Ordem
+			id
+			Instituição
+			Funcionario
+			Categoria
+			Descrição
+			Equipamento
+			Data
+	Index
+		Menu
+			login
+			criar ordem
+			exibir posts
+
+	AJEITAR PAGINA
+		ajeitar nomes
+			/Admin @login
+			/Admin/Create @login
+			/Admin/Update/<> @login
+			/Home = /Index
+			/Post @login
+			/Post/Update/<> @login
+			/Instituicao @login
+			/Instituicao/Create @login
+			/Instituicao/Update/<> @login
+			/Funcao @login
+			/Funcao/Create @login
+			/Funcao/Update/<> @login
+			/Equipamento @login
+			/Equipamento/Create @login
+			/Equipamento/Update/<> @login
+			/Categoria @login
+			/Categoria/Create @login
+			/Categoria/Update/<> @login
+			/Ordem
+			/Ordem/List	@login
+			/Ordem/Update/<> @login
+			
+			
+
