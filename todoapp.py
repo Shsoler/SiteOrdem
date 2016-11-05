@@ -10,8 +10,77 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/banco.db'
 
 db = SQLAlchemy(app)
 
-#banco de usuarios
 
+#banco de Instituiçãos
+class Instituicao(db.Model):
+	__tablename__ = 'instituicao'
+
+	_id = db.Column(db.Integer,primary_key=True,autoincrement=True)
+	nome = db.Column(db.String(250),nullable=False)
+	telefone = db.Column(db.String(11),nullable=False)
+	end = db.Column(db.String(250),nullable=False)
+	#determinando relacionamento
+	ordens = db.relationship('Ordem',backref="instituicao", cascade="all,delete-orphan",lazy='dynamic')
+
+	def __init__(self,nome,telefone,end):
+		self.nome = nome
+		self.telefone = telefone
+		self.end = end
+
+#Função
+class Funcao(db.Model):
+	__tablename__ = 'funcao'
+
+	_id = db.Column(db.Integer,primary_key=True,autoincrement=True)
+	descricao = db.Column(db.String(250),nullable=False)
+	ordens = db.relationship('Ordem',backref="funcao", cascade="all,delete-orphan",lazy='dynamic')
+
+	def __init__(self,descricao):
+		self.descricao = descricao
+
+#Equipamento
+class Equipamento(db.Model):
+	__tablename__ = "equipamento"
+
+	_id = db.Column(db.Integer,primary_key=True,autoincrement=True)
+	descricao = db.Column(db.String(250),nullable=False)
+	ordens = db.relationship('Ordem',backref="equipamento", cascade="all,delete-orphan",lazy='dynamic')
+
+	def __init__(self,descricao):
+		self.descricao = descricao
+
+#Categoria
+class Categoria(db.Model):
+	__tablename__ = "categoria"
+
+	_id = db.Column(db.Integer,primary_key=True,autoincrement=True)
+	descricao = db.Column(db.String(250),nullable=False)
+	ordens = db.relationship('Ordem',backref="categoria", cascade="all,delete-orphan",lazy='dynamic')
+
+	def __init__(self,descricao):
+		self.descricao = descricao
+#Ordem Serviço
+class Ordem(db.Model):
+	__tablename__ = "ordem"
+
+	_id = db.Column(db.Integer, primary_key=True,autoincrement=True)
+	descricao = db.Column(db.String(250),nullable=False)
+	data = db.Column(db.DateTime)
+	instituicao_id = db.Column(db.Integer, db.ForeignKey('instituicao._id'))
+	funcao_id = db.Column(db.Integer, db.ForeignKey('funcao._id'))
+	categoria_id = db.Column(db.Integer, db.ForeignKey('categoria._id'))
+	equipamento_id = db.Column(db.Integer, db.ForeignKey('equipamento._id'))
+
+	def __init__(self,descricao,instituicao_id,funcao_id,categoria_id,equipamento_id):
+		self.descricao = descricao
+		self.date = datetime.utcnow()
+		self.instituicao_id = instituicao_id
+		self.funcao_id = funcao_id
+		self.categoria_id = categoria_id
+		self.equipamento_id = equipamento_id
+
+
+#banco de usuarios
 class User(db.Model):
 	__tablename__ = 'user'
 
