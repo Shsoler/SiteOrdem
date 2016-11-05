@@ -7,6 +7,11 @@ criar:
 
 
 	CRUD
+		XUser - Administrado
+			xid
+			xname
+			xlogin
+			xpassword
 		Instituição
 			id
 			nome
@@ -37,12 +42,14 @@ criar:
 
 	AJEITAR PAGINA
 		ajeitar nomes
-			/Admin @login
-			/Admin/Create @login
-			/Admin/Update/<> @login
-			/Home = /Index
-			/Post @login
-			/Post/Update/<> @login
+			X/Admin @login
+			X/Admin/Create @login
+			X/Admin/Update/<> @login
+			X/Admin/Delete/<> @login
+			X/Home = /Index
+			X/Post @login propria page home acima
+			X/Post/Update/<> @login
+			X/Post/Delete/<> @login
 			/Instituicao @login
 			/Instituicao/Create @login
 			/Instituicao/Update/<> @login
@@ -59,5 +66,29 @@ criar:
 			/Ordem/List	@login
 			/Ordem/Update/<> @login
 			
-			
+	Relatorio
+		Instituicao
+			Sempre
+			Ano
+			Mes
+		Função
+			Sempre
+			Ano
+			Mes
+		Equipamento
+			Sempre
+			Ano
+			Mes
+		Categoria
+			Sempre
+			Ano
+			Mes
+		Ordem
+			Sempre
+			Ano
+			Mes
+		Post
+			Sempre
+			Ano
+			Mes
 
