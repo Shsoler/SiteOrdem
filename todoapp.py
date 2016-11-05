@@ -10,6 +10,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/banco.db'
 
 db = SQLAlchemy(app)
 
+#banco de usuarios
+
 class User(db.Model):
 	__tablename__ = 'user'
 
@@ -23,6 +25,7 @@ class User(db.Model):
 		self.login = login
 		self.password = password
 
+	#funções do flask-login
 	def is_authenticated(self):
 		return True
 
@@ -38,6 +41,7 @@ class User(db.Model):
 	def __repr__(self):
 		return '<User %r>' % (self.name)
 
+#banco de posts
 class Post(db.Model):
 	__tablename__ = 'post'
 
@@ -51,9 +55,10 @@ class Post(db.Model):
 		self.titulo = titulo
 		self.descricao = descricao
 
-
+#comitando no banco
 db.create_all()
 
+#criando usuario admin
 user = User("admin","admin","admin")
 db.session.add(user)
 db.session.commit()
@@ -62,22 +67,26 @@ db.session.commit()
 login_manager = LoginManager()
 login_manager.init_app(app)
 
-login_manager.login_view = 'login'
+login_manager.login_view = 'Login'
 
 @login_manager.user_loader
 def load_user(id):
 	return User.query.get(int(id))
 
+
+
 @app.route('/')
 @app.route('/index')
 def index():
-	return "hello"
+	return redirect(url_for('home'))
+
 
 @app.route('/home')
 def home():
 	return render_template("home.html",posts = Post.query.all())
 
-@app.route('/newpost', methods =['GET','POST'])
+#criar novo post
+@app.route('/Post/Create', methods =['GET','POST'])
 def newpost():
 	if request.method == 'POST':
 		post = Post(request.form["titulo"],request.form['descricao'])
@@ -85,7 +94,9 @@ def newpost():
 		db.session.commit()
 	return render_template('newpost.html')
 
-@app.route('/newpost/<int:post_id>',methods=['GET','POST'])
+
+#atualizar post
+@app.route('/Post/Update/<int:post_id>',methods=['GET','POST'])
 def updatePost(post_id):
 	post_item = Post.query.get(post_id)
 	if request.method == 'GET':
@@ -96,33 +107,43 @@ def updatePost(post_id):
 	db.session.commit()
 	return redirect(url_for('home'))
 
-@app.route('/newpost/delete/<int:post_id>',methods=['GET','POST'])
+#deletar post
+@app.route('/Post/Delete/<int:post_id>',methods=['GET','POST'])
 def deletePost(post_id):
 	post_item = Post.query.get(post_id)
 	db.session.delete(post_item)
 	db.session.commit()
 	return redirect(url_for('home'))
 
-
-@app.route('/new',methods=['GET','POST'])
+#criar admin
+@app.route('/Admin/Create',methods=['GET','POST'])
 @login_required
 def new():
 	if request.method == 'POST':
 		user = User(request.form['name'],request.form['login'],request.form['password'])
 		db.session.add(user)
 		db.session.commit()
-		return redirect(url_for('index'))
+		return redirect(url_for('home'))
 	return render_template('new.html')
 
-
-@app.route('/admin/')
+#listar admin
+@app.route('/Admin/')
 def admin():
 
 	return render_template('admin.html',
 			users = User.query.all()
 		)
 
-@app.route('/admin/<int:user_id>', methods = ['GET','POST'])
+#update admin
+@app.route('/Admin/Delete/<int:admin_id>',methods=['GET','POST'])
+def deleteAdmin(admin_id):
+	admin_item = User.query.get(admin_id)
+	db.session.delete(admin_item)
+	db.session.commit()
+	return redirect(url_for('admin'))
+
+#update admin
+@app.route('/Admin/Update/<int:user_id>', methods = ['GET','POST'])
 @login_required
 def updateAdmin(user_id):
 	user_item = User.query.get(user_id)
@@ -135,7 +156,8 @@ def updateAdmin(user_id):
 	db.session.commit()
 	return redirect(url_for('admin'))
 
-@app.route('/login',methods = ['GET','POST'])
+#logar
+@app.route('/Login',methods = ['GET','POST'])
 def login():
 	if current_user.is_authenticated:
 		return redirect(url_for('index'))	
@@ -149,9 +171,10 @@ def login():
 		return redirect(url_for('login'))
 	login_user(registered_user)
 	flash('Login Realizado')
-	return redirect(request.args.get('next') or url_for('index'))
+	return redirect(request.args.get('next') or url_for('home'))
 	
-@app.route('/logout')
+#deslogar
+@app.route('/Logout')
 def logout():
 	logout_user()
 	return redirect(url_for('index'))

@@ -9,8 +9,8 @@
 					        <th>{{post.titulo}}
                				 {% if g.user.is_authenticated%}
 					        <tr>
-					        	<td><a href="/newpost/{{ post._id }}">{{ post._id}}</a>
-					        	<td><a href="/newpost/delete/{{ post._id}}">Excluir</a>
+					        	<td><a href="/Post/Update/{{ post._id }}">{{ post._id}}</a>
+					        	<td><a href="/Post/Delete/{{ post._id}}">Excluir</a>
 					        </tr>
 					        {% endif%}
 					        <tr>

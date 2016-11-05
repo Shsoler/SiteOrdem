@@ -10,10 +10,11 @@
         <th>Senha
       {%- for user in users %}
       <tr class="success">
-        <td><a href="/admin/{{ user._id }}">{{ user._id}}</a>
+        <td><a href="/Admin/Update/{{ user._id }}">{{ user._id}}</a>
         <td >{{ user.name }}
        <td >{{ user.login }}
         <td>{{ user.password }}</td>
+        <td><a href="/Admin/Delete/{{ user._id}}">Excluir</td>
       {%- endfor %}
     </table>
     <p>
