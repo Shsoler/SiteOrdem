@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block body %}
+<div id="main" class="container">
+    <h2>Todas as Funções</h2>
+      {%- for ordem in ordens%}
+      <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-sm-3 col-lg-offset-5"><a href="/Ordem/Update/{{ ordem._id }}">{{ ordem._id}}</a></div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-6">Instituição: {{ ordem.instituicao.nome }}</div>
+                <div class="col-sm-6">Função: {{ ordem.funcao.descricao }}</div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-6">Categoria: {{ ordem.categoria.descricao }}</div>
+                <div class="col-sm-6">Tipo de Equipamento: {{ ordem.equipamento.descricao }}</div>
+            </div>
+        </div>
+        <div class="panel-body">{{ ordem.descricao}}</div>
+        <div class="panel-footer">
+            <div class="row">
+                <div class="col-sm-6">{{ ordem.data }}</div>
+                <div class="col-sm-6"><a href="/Ordem/Delete/{{ ordem._id}}">Excluir</a></div>
+            </div>
+        </div>
+      </div>
+
+      {%- endfor %}
+    <p>
+      <a href="{{ url_for('createordem') }}" class="btn btn-large btn-primary">Nova Ordem</a>
+</div>
+{% endblock %}

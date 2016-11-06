@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block body %}
+<div id="main" class="container">
+    <h2>Todas as Funções</h2>
+    <table class="table table-hover">
+      <tr>
+        <th>#
+        <th>Descrição
+      {%- for equip in equips %}
+      <tr class="success">
+        <td><a href="/Equipamento/Update/{{ equip._id }}">{{ equip._id}}</a>
+        <td >{{ equip.descricao}}
+        <td><a href="/Equipamento/Delete/{{ equip._id}}">Excluir</a></td>
+      {%- endfor %}
+    </table>
+    <p>
+      <a href="{{ url_for('createequipamento') }}" class="btn btn-large btn-primary">Novo Equipamento</a>
+
+
+</div>
+{% endblock %}

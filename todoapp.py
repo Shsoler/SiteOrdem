@@ -77,7 +77,7 @@ class Ordem(db.Model):
 
     def __init__(self, descricao, instituicao_id, funcao_id, categoria_id, equipamento_id):
         self.descricao = descricao
-        self.date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        self.data = datetime.utcnow()
 
         self.instituicao_id = instituicao_id
         self.funcao_id = funcao_id
@@ -168,6 +168,7 @@ def newpost():
         post = Post(request.form["titulo"], request.form['descricao'])
         db.session.add(post)
         db.session.commit()
+        return redirect(url_for('home'))
     return render_template('newpost.html')
 
 
@@ -338,7 +339,7 @@ def updateequipamento(equip_id):
     equip_item = Equipamento.query.get(equip_id)
     if request.method == 'GET':
         return render_template('equipamentoUpdate.html', equip=equip_item)
-    equip_item.nome = request.form['desc']
+    equip_item.descricao = request.form['desc']
     equip_item.done = ('done.%d' % equip_id) in request.form
     db.session.commit()
     return redirect(url_for('equipamento'))
@@ -358,8 +359,100 @@ def deleteequipamento(equip_id):
 @login_required
 def equipamento():
     return render_template('Equipamento.html',
-                           funcs=Equipamento.query.all())
+                           equips=Equipamento.query.all())
 
+
+# criar Categoria
+@app.route('/Categoria/Create', methods=['GET', 'POST'])
+def createcategoria():
+    if request.method == 'GET':
+        return render_template('categoriaCreate.html')
+    cat_item = Categoria(request.form['desc'])
+    db.session.add(cat_item)
+    db.session.commit()
+    return redirect(url_for('categoria'))
+
+
+# update Categoria
+@app.route('/Categoria/Update/<int:cat_id>', methods=['GET', 'POST'])
+def updatecategoria(cat_id):
+    cat_item = Categoria.query.get(cat_id)
+    if request.method == 'GET':
+        return render_template('categoriaUpdate.html', cat=cat_item)
+    cat_item.descricao = request.form['desc']
+    cat_item.done = ('done.%d' % cat_id) in request.form
+    db.session.commit()
+    return redirect(url_for('categoria'))
+
+
+# deletar Categoria
+@app.route('/Categoria/Delete/<int:cat_id>', methods=['GET', 'POST'])
+def deletecategoria(cat_id):
+    cat_item = Categoria.query.get(cat_id)
+    db.session.delete(cat_item)
+    db.session.commit()
+    return redirect(url_for('categoria'))
+
+
+# listar Categoria
+@app.route('/Categoria/')
+@login_required
+def categoria():
+    return render_template('Categoria.html',
+                           cats=Categoria.query.all())
+
+
+# ------------------------------
+
+
+# criar Ordem
+@app.route('/Ordem/Create', methods=['GET', 'POST'])
+def createordem():
+    if request.method == 'GET':
+        return render_template('ordemCreate.html', insts=Instituicao.query.all(),funcs=Funcao.query.all()
+                               , cats=Categoria.query.all(), equips=Equipamento.query.all())
+    ordem_item = Ordem(request.form['desc'], request.form['instituicao'], request.form['funcao'],
+                       request.form['categoria'], request.form['equipamento'])
+    db.session.add(ordem_item)
+    db.session.commit()
+    return redirect(url_for('ordem'))
+
+
+# update ordem
+@app.route('/Ordem/Update/<int:ordem_id>', methods=['GET', 'POST'])
+def updateordem(ordem_id):
+    ordem_item = Ordem.query.get(ordem_id)
+    if request.method == 'GET':
+        return render_template('ordemUpdate.html', ordem=ordem_item,insts=Instituicao.query.all(),funcs=Funcao.query.all()
+                               , cats=Categoria.query.all(), equips=Equipamento.query.all())
+    ordem_item.descricao = request.form['desc']
+    ordem_item.instituicao_id = request.form['instituicao']
+    ordem_item.funcao_id = request.form['funcao']
+    ordem_item.categoria_id = request.form['categoria']
+    ordem_item.equipamento_id = request.form['equipamento']
+    ordem_item.done = ('done.%d' % ordem_id) in request.form
+    db.session.commit()
+    return redirect(url_for('categoria'))
+
+
+# deletar Ordem
+@app.route('/Ordem/Delete/<int:ordem_id>', methods=['GET', 'POST'])
+def deleteordem(ordem_id):
+    ordem_item = Ordem.query.get(ordem_id)
+    db.session.delete(ordem_item)
+    db.session.commit()
+    return redirect(url_for('ordem'))
+
+
+# listar Ordem
+@app.route('/Ordem/')
+@login_required
+def ordem():
+    return render_template('Ordem.html',
+                           ordens=Ordem.query.all())
+
+
+# -------------------------------
 
 # logar
 @app.route('/Login', methods=['GET', 'POST'])
@@ -394,3 +487,4 @@ def before_request():
 if __name__ == '__main__':
     app.secret_key = 'super secret key'
     app.run()
+    FLASK_DEBUG = 1

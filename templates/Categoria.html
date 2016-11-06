@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block body %}
+<div id="main" class="container">
+    <h2>Todas as Funções</h2>
+    <table class="table table-hover">
+      <tr>
+        <th>#
+        <th>Descrição
+      {%- for cat in cats %}
+      <tr class="success">
+        <td><a href="/Categoria/Update/{{ cat._id }}">{{ cat._id}}</a>
+        <td >{{ cat.descricao}}
+        <td><a href="/Categoria/Delete/{{ cat._id}}">Excluir</a></td>
+      {%- endfor %}
+    </table>
+    <p>
+      <a href="{{ url_for('createcategoria') }}" class="btn btn-large btn-primary">Novo Equipamento</a>
+
+
+</div>
+{% endblock %}

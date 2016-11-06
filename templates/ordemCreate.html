@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block body %}
+
+    <form action="" method=post class="form-horizontal" xmlns="http://www.w3.org/1999/html">
+    <h2>Criar Ordem</h2>
+    <div class="control-group">
+        <div class="controls">
+        <div class="row">
+          <select class="col-lg-5" name="instituicao" id="instituicao" required>
+            {% for inst in insts %}
+                <option value="{{ inst._id }}">{{ inst.nome }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="row">
+           <select class="col-lg-5" name="funcao" id="funcao" required>
+            {% for func in funcs %}
+                <option value="{{ func._id }}">{{ func.descricao }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="row">
+           <select class="col-lg-5" name="categoria" id="categoria" required>
+            {% for cat in cats%}
+                <option value="{{ cat._id }}">{{ cat.descricao }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="row">
+          <select class="col-lg-5" name="equipamento" id="equipamento" required>
+            {% for equip in equips%}
+                <option value="{{ equip._id }}">{{ equip.descricao }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="row">
+        <textarea class="col-lg-5" name="desc" id="desc" cols="50" rows="5" placeholder="Poste Aqui"></textarea>
+        </div>
+        </div>
+    </div>
+    <br>
+    <div class="control-group">
+        <div class="controls">
+          <button type="submit" class="btn btn-success">Criar</button>
+          <a href="{{ url_for('ordem') }}">Voltar</a>
+        </div>
+    </div>
+  </form>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% block body %}
+
+  <form action="" method=post class="form-horizontal">
+    <h2>Update Ordem</h2>
+    <div class="control-group">
+        <div class="controls">
+        <div class="row">
+          <select class="col-lg-5" name="instituicao" id="instituicao" required>
+            {% for inst in insts %}
+                <option value="{{ inst._id }}" {% if ordem.instituicao._id == inst._id %} selected="selected" {% endif %}>{{ inst.nome }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="row">
+           <select class="col-lg-5" name="funcao" id="funcao" required>
+            {% for func in funcs %}
+                <option value="{{ func._id }}" {% if ordem.funcao._id == func._id %} selected="selected" {% endif %}>{{ func.descricao }}</option>
+            {% endfor %}
+          </select>
+        </div>
+         <div class="row">
+           <select class="col-lg-5" name="categoria" id="categoria" required>
+            {% for cat in cats%}
+                <option value="{{ cat._id }}" {% if ordem.categoria._id == cat._id %} selected="selected" {% endif %}>{{ cat.descricao }}</option>
+            {% endfor %}
+          </select>
+         </div>
+        <div class="row">
+          <select class="col-lg-5" name="equipamento" id="equipamento" required>
+            {% for equip in equips%}
+                <option value="{{ equip._id }}" {% if ordem.equipamento._id == equip._id %} selected="selected" {% endif %}>{{ equip.descricao }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        </div>
+    </div>
+    <div class="row">
+        <textarea class="col-lg-5" name="desc" id="desc" cols="50" rows="5" >{{ ordem.descricao }}</textarea>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+          <button type="submit" class="btn btn-success">Criar</button>
+          <a href="{{ url_for('equipamento') }}">Voltar</a>
+        </div>
+    </div>
+  </form>
+{% endblock %}
