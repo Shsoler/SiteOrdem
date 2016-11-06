@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from flask import Flask, request, flash, url_for, redirect, render_template, abort, g
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager, login_user, logout_user, current_user, login_required
-
+from flask_weasyprint import HTML, render_pdf
 
 app = Flask(__name__)
 
@@ -458,9 +458,77 @@ def ordem():
 def OrdemReport(dias):
     ate = datetime.now().replace(second=0, microsecond=0) - timedelta(days=dias)
     de = datetime.now().replace(second=0, microsecond=0)
-    reports = Ordem.query.filter(Ordem.data > ate)
+    if ate == de:
+        reports = Ordem.query.all()
+    else:
+        reports = Ordem.query.filter(Ordem.data > ate)
     if request.method == 'GET':
-        return render_template("ordemReport.html", reports=reports, dias=dias,ate=ate,de=de)
+        html = render_template("ordemReport.html", reports=reports, dias=dias,ate=ate,de=de)
+        return render_pdf(HTML(string = html))
+    return redirect(url_for('home'))
+
+
+# pegar ordens baseado em Instituição
+@app.route('/Ordem/Report/Instituicao/<int:dias>',methods=['GET','POST'])
+def OrdemReportInst(dias):
+    insts = Instituicao.query.all()
+    ate = datetime.now().replace(second=0, microsecond=0) - timedelta(days=dias)
+    de = datetime.now().replace(second=0, microsecond=0)
+    if ate==de:
+     reports = Ordem.query.all()
+    else:
+     reports = Ordem.query.filter(Ordem.data > ate)
+    if request.method == 'GET':
+        html = render_template("ordemInstReport.html", reports=reports, dias=dias,ate=ate,de=de,insts=insts)
+        return render_pdf(HTML(string=html))
+    return redirect(url_for('home'))
+
+
+# pegar ordens baseado em Categoria
+@app.route('/Ordem/Report/Categoria/<int:dias>',methods=['GET','POST'])
+def OrdemReportCat(dias):
+    cats = Categoria.query.all()
+    ate = datetime.now().replace(second=0, microsecond=0) - timedelta(days=dias)
+    de = datetime.now().replace(second=0, microsecond=0)
+    if ate==de:
+     reports = Ordem.query.all()
+    else:
+     reports = Ordem.query.filter(Ordem.data > ate)
+    if request.method == 'GET':
+        html = render_template("ordemCatReport.html", reports=reports, dias=dias,ate=ate,de=de,cats=cats)
+        return render_pdf(HTML(string=html))
+    return redirect(url_for('home'))
+
+
+# pegar ordens baseado em Função
+@app.route('/Ordem/Report/Funcao/<int:dias>',methods=['GET','POST'])
+def OrdemReportFunc(dias):
+    funcs = Funcao.query.all()
+    ate = datetime.now().replace(second=0, microsecond=0) - timedelta(days=dias)
+    de = datetime.now().replace(second=0, microsecond=0)
+    if ate==de:
+     reports = Ordem.query.all()
+    else:
+     reports = Ordem.query.filter(Ordem.data > ate)
+    if request.method == 'GET':
+        html = render_template("ordemFuncReport.html", reports=reports, dias=dias,ate=ate,de=de,funcs=funcs)
+        return render_pdf(HTML(string=html))
+    return redirect(url_for('home'))
+
+
+# pegar ordens baseado em Equipamento
+@app.route('/Ordem/Report/Equipamento/<int:dias>',methods=['GET','POST'])
+def OrdemReportEquip(dias):
+    equips = Equipamento.query.all()
+    ate = datetime.now().replace(second=0, microsecond=0) - timedelta(days=dias)
+    de = datetime.now().replace(second=0, microsecond=0)
+    if ate==de:
+     reports = Ordem.query.all()
+    else:
+     reports = Ordem.query.filter(Ordem.data > ate)
+    if request.method == 'GET':
+        html = render_template("ordemEquipReport.html", reports=reports, dias=dias,ate=ate,de=de,equips=equips)
+        return render_pdf(HTML(string=html))
     return redirect(url_for('home'))
 
 
@@ -480,7 +548,6 @@ def login():
     login_user(registered_user)
     flash('Login Realizado')
     return redirect(request.args.get('next') or url_for('home'))
-
 
 
 # deslogar

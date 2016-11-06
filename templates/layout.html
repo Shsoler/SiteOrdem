@@ -2,35 +2,114 @@
 <title>Super Ordem</title>
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 <meta charset="utf-8">
+<script src="/static/bootstrap/jquery.js"></script>
+<link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">
+<script src="/static/bootstrap/js/bootstrap.min.js"></script>
 <style>
 body {
-    padding-top: 60px;
-    padding-bottom: 100px;
+  padding-top: 60px;
+  padding-bottom: 100px;
 }
 </style>
-<link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">
-<script src="/bootstrap/jquery.js"></script>
-<script src="/static/bootstrap/js/bootstrap.js"></script>
+
 {% if g.user.is_authenticated %}
- <nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="/">Super Ordem</a>
     </div>
     <ul class="nav navbar-nav">
       <li ><a href="/">Home</a></li>
-      <li><a href="/Admin">Admin</a></li>
-      <li><a href="/Post/Create">Criar Post</a></li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="#"></span>{{g.user.name}}</a></li>  
-      <li><a href="/Logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-    </ul>
-  </div>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administrador<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="/Admin">Listar</a></li>
+          <li><a href="/Admin/Create">Criar</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Post<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="/">Listar</a></li>
+          <li><a href="/Post/Create">Criar</a></li>
+          <li class="divider"></li>
+          <li class="dropdown-header">Relatórios</li>
+          <li><a href="#">Semana</a></li>
+          <li><a href="#">Mês</a></li>
+          <li><a href="#">Ano</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Instituição<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="/Instituicao">Listar</a></li>
+          <li><a href="/Instituicao/Create">Criar</a></li>
+          <li class="divider"></li>
+          <li class="dropdown-header">Relatórios</li>
+          <li><a href="/Ordem/Report/Instituicao/0" target="_blank">Todos</a></li>
+          <li><a href="/Ordem/Report/Instituicao/30" target="_blank">Mês</a></li>
+          <li><a href="/Ordem/Report/Instituicao/365" target="_blank">Ano</a></li>
+        </ul>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Função<b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="/Funcao">Listar</a></li>
+            <li><a href="/Funcao/Create">Criar</a></li>
+            <li class="divider"></li>
+            <li class="dropdown-header">Relatórios</li>
+            <li><a href="/Ordem/Report/Funcao/0" target="_blank">Todos</a></li>
+            <li><a href="/Ordem/Report/Funcao/30" target="_blank">Mês</a></li>
+            <li><a href="/Ordem/Report/Funcao/365" target="_blank">Ano</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Categoria<b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="/Categoria">Listar</a></li>
+            <li><a href="/Categoria/Create">Criar</a></li>
+            <li class="divider"></li>
+            <li class="dropdown-header">Relatórios</li>
+            <li><a href="/Ordem/Report/Categoria/0" target="_blank">Todos</a></li>
+            <li><a href="/Ordem/Report/Categoria/30" target="_blank">Mês</a></li>
+            <li><a href="/Ordem/Report/Categoria/365" target="_blank">Ano</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Equipamento<b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="/Equipamento">Listar</a></li>
+            <li><a href="/Equipamento/Create">Criar</a></li>
+            <li class="divider"></li>
+            <li class="dropdown-header">Relatórios</li>
+            <li><a href="/Ordem/Report/Equipamento/0" target="_blank">Todos</a></li>
+            <li><a href="/Ordem/Report/Equipamento/30" target="_blank">Mês</a></li>
+            <li><a href="/Ordem/Report/Equipamento/365" target="_blank">Ano</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ordem<b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="/Ordem">Listar</a></li>
+            <li><a href="/Ordem/Create">Criar</a></li>
+            <li class="divider"></li>
+            <li class="dropdown-header">Relatórios</li>
+            <li><a href="/Ordem/Report/0" target="_blank">Todos</a></li>
+            <li><a href="/Ordem/Report/30" target="_blank">Mês</a></li>
+            <li><a href="/Ordem/Report/365" target="_blank">Ano</a></li>
+          </ul>
+        </li>
+      </li>
+    </ul>     
+  </ul>
+  <ul class="nav navbar-nav navbar-right">
+    <li><a href="#"></span>{{g.user.name}}</a></li>  
+    <li><a href="/Logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+  </ul>
+</div>
 </nav>
 {% endif %}
 {% if not g.user.is_authenticated %}
- <nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="/">Super Ordem</a>
@@ -45,10 +124,10 @@ body {
   </div>
 </nav>
 {% endif %}
-  
+
 <div id="main" class="container">
-    {% block body %}{% endblock %}
-    <hr>
-    <footer id="footer">  
-    </footer>
+  {% block body %}{% endblock %}
+  <hr>
+  <footer id="footer">  
+  </footer>
 </div>

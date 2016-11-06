@@ -2,6 +2,7 @@
 <head>
     <meta charset="utf-8">
 </head>
+<body>
     <h1>Ordens Geradas nos ultimo - {{ dias }} dias</h1>
     <h2>de {{ de }} até {{ ate }}</h2>
     {% for ordem in reports %}
@@ -25,4 +26,5 @@
         <p >{{ ordem.descricao }}</p>
         <hr><hr>
     {% endfor %}
+</body>
 </html>
