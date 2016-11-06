@@ -5,21 +5,18 @@
     <div class="control-group">
         <div class="controls">
           <input type="text" id="titulo" name="titulo" class="input-xlarge"
-            placeholder="Name" value="{{ request.form.titulo }}"
+            placeholder="Titulo" value="{{ request.form.titulo }}"
             required>
         </div>
     </div>
-
+    <br>
      <div class="control-group">
         <div class="controls">
-            <textarea name="descricao" id="descricao" cols="50" rows="5">
-            Digite seu post
-            </textarea>
+            <textarea name="descricao" id="descricao" cols="50" rows="5" placeholder="Poste Aqui"></textarea>
         </div>
     <div class="control-group">
         <div class="controls">
           <button type="submit" class="btn btn-success">Criar Post</button>
-          <a href="{{ url_for('home') }}">Home</a>
         </div>
     </div>
   </form>

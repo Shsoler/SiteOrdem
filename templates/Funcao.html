@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block body %}
+<div id="main" class="container">
+    <h2>Todas as Funções</h2>
+    <table class="table table-hover">
+      <tr>
+        <th>#
+        <th>Descrição
+      {%- for func in funcs %}
+      <tr class="success">
+        <td><a href="/Funcao/Update/{{ func._id }}">{{ func._id}}</a>
+        <td >{{ func.descricao}}
+        <td><a href="/Funcao/Delete/{{ func._id}}">Excluir</a></td>
+      {%- endfor %}
+    </table>
+    <p>
+      <a href="{{ url_for('createfuncao') }}" class="btn btn-large btn-primary">Nova Função</a>
+ 
+ 
+</div>
+{% endblock %}

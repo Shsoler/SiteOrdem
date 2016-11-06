@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block body %}
+
+  <form action="" method=post class="form-horizontal">
+    <h2>Atualizar Administrador</h2>
+    <div class="control-group">
+        <div class="controls">
+          <input type="text" id="nome" nome="nome" class="input-xlarge"
+            placeholder="Nome" value ="{{ request.form.nome }}"
+            required>
+        </div>
+    </div>
+ 
+    <div class="control-group">
+        <div class="controls">
+          <input type="text" id="telefone" nome="telefone" class="input-xlarge"
+            placeholder="Telefone" value ="{{ request.form.telefone }}"
+            required>
+        </div>
+    </div>
+ 
+    <div class="control-group">
+        <div class="controls">
+          <input type="text" id="endereco" nome="endereco" class="input-xlarge"
+            placeholder="Endereço"  value ="{{ request.form.end }}"
+            required>
+        </div>
+    </div>
+ 
+ 
+    <div class="control-group">
+        <div class="controls">
+          <button type="submit" class="btn btn-success">Atualizar</button>
+          <a href="{{ url_for('instituicao') }}">Voltar</a>
+        </div>
+    </div>
+  </form>
+{% endblock %}

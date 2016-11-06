@@ -2,26 +2,29 @@
 {% block body %}
 			<form>
 				<div id="main" class="container">
-				    <h2>All Items</h2>
-				    <table class="table table-hover">
-					    	<tr>
+				    <h2>Noticias</h2>
 					    {%- for post in posts %}
-					        <th>{{post.titulo}}
-               				 {% if g.user.is_authenticated%}
-					        <tr>
-					        	<td><a href="/Post/Update/{{ post._id }}">{{ post._id}}</a>
-					        	<td><a href="/Post/Delete/{{ post._id}}">Excluir</a>
-					        </tr>
+					        <th><h2 class="blog-post-title">{{post.titulo}}</h2>
+					        	<p class="blog-post-meta">{{ post.data}}<p>
+					        	 {% if g.user.is_authenticated%}
+					        	 <table>
+					        	 	<tr>
+					        	 		<td>
+					        				<a class="blog-post-meta" href="/Post/Update/{{ post._id }}">Atualizar - {{ post._id}}</a>
+					       				</td>
+					       				<td>
+					       					&nbsp
+					       				</td>
+					       				<td>
+					        			<a class="blog-post-meta" href="/Post/Delete/{{ post._id}}">Excluir</a>
+					        			</td>
+					        		</tr>
+					        	</table>
 					        {% endif%}
-					        <tr>
-					        	<td>{{ post.data}}
-					        </tr>
-					        <tr>
-					        	<td>{{ post.descricao }}
-					        </tr>
+					        	<hr>
+					        	<p>{{ post.descricao }}</p>
+					        <hr>
 					     {%- endfor %}
-				  		</tr>
-				    </table>
 				    <p>
 				      <a href="{{ url_for('newpost') }}" class="btn btn-large btn-primary">Novo Post</a>
 				</div>

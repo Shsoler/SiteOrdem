@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block body %}
+  <form action="" method=post class="form-horizontal">
+    <h2>Atualizar Instituição</h2>
+    <div class="control-group">
+        <div class="controls">
+          <input type="text" id="nome" name="nome" class="input-xlarge"
+            placeholder="Nome" value="{{ inst.nome }}"
+            required>
+        </div>
+    </div>
+ 
+    <div class="control-group">
+        <div class="controls">
+          <input type="text" id="telefone" name="telefone" class="input-xlarge"
+            placeholder="Telefone" value="{{ inst.telefone }}"
+            required>
+        </div>
+    </div>
+ 
+    <div class="control-group">
+        <div class="controls">
+          <input type="text" id="end" name="end" class="input-xlarge"
+            placeholder="Endereço" value="{{ inst.end }}"
+            required>
+        </div>
+    </div>
+ 
+ 
+    <div class="control-group">
+        <div class="controls">
+          <button type="submit" class="btn btn-success">Atualizar</button>
+          <a href="{{ url_for('instituicao') }}">Voltar</a>
+        </div>
+    </div>
+  </form>
+{% endblock %}
