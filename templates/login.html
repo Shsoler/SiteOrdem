@@ -1,25 +1,35 @@
 {% extends "layout.html" %}
 {% block body %}
-  <form action="" method=post class="form-horizontal">
-    <h2>Logar Sistema de Ordem </h2>
-    <div class="control-group">
-        <div class="controls">
-          <input type="text" id="login" name="login" class="input-xlarge"
-            placeholder="Digite o Login" required>
+    <div class="container">
+    <div class="jumbotron" align="middle">
+    <form action="" method=post class="form-horizontal">
+        <h2>Logar Sistema de Ordem </h2>
+        <div class="control-group">
+            <div class="controls">
+                <span class="glyphicon glyphicon-user"></span>
+                <input type="text" id="login" name="login" class="input-xlarge"
+                       placeholder="Digite o Login" required>
+            </div>
         </div>
-    </div>
- 
-    <div class="control-group">
-        <div class="controls">
-          <input type="password" id="password" name="password" class="input-xlarge"
-            placeholder="Digite Senha" required>
+        <div class="control-group">
+            <div class="controls">
+                <span class="glyphicon glyphicon-asterisk"></span>
+                <input type="password" id="password" name="password" class="input-xlarge"
+                       placeholder="Digite Senha" required>
+            </div>
         </div>
-    </div>
- 
-    <div class="control-group">
-        <div class="controls">
-          <button type="submit" class="btn btn-success">Logar</button>
+        {% if error %}
+            <div class="alert alert-danger">
+                <strong>Erro</strong> {{ error}}.
+            </div>
+            {% endif %}
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" class="btn btn-success">Logar</button>
+            </div>
         </div>
+    <br><br>
+    </form>
     </div>
-  </form>
+    </div>
 {% endblock %}

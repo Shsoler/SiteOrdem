@@ -14,7 +14,7 @@
             <table>
                 <tr>
                     <td>ID: {{ ordem._id }}</td>
-                    <td>&emsp;Data: {{ ordem.data }}</td>
+                    <td>&emsp;Data: {{ ordem.data.replace( microsecond=0) }}</td>
                 </tr>
                 <hr>
                 <tr>

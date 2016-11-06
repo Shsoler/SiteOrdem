@@ -96,11 +96,13 @@ class User(db.Model):
     password = db.Column(db.String(250), nullable=False)
 
     def __init__(self, name, login, password):
-        self.name = name
-        self.login = login
-        self.password = password
+         verifica = User.query.filter_by(login = login).first()
+         if verifica is None:
+             self.name = name
+             self.login = login
+             self.password = password
 
-    # funções do flask-login
+            # funções do flask-login
     def is_authenticated(self):
         return True
 
@@ -136,14 +138,18 @@ class Post(db.Model):
 db.create_all()
 
 # criando usuario admin
+
 user = User("admin", "admin", "admin")
-db.session.add(user)
-db.session.commit()
+if user is None:
+ db.session.add(user)
+ db.session.commit()
+
 
 login_manager = LoginManager()
 login_manager.init_app(app)
 
 login_manager.login_view = 'Login'
+
 
 
 @login_manager.user_loader
@@ -164,6 +170,7 @@ def home():
 
 # criar novo post
 @app.route('/Post/Create', methods=['GET', 'POST'])
+@login_required
 def newpost():
     if request.method == 'POST':
         post = Post(request.form["titulo"], request.form['descricao'])
@@ -175,6 +182,7 @@ def newpost():
 
 # atualizar post
 @app.route('/Post/Update/<int:post_id>', methods=['GET', 'POST'])
+@login_required
 def updatePost(post_id):
     post_item = Post.query.get(post_id)
     if request.method == 'GET':
@@ -188,6 +196,7 @@ def updatePost(post_id):
 
 # deletar post
 @app.route('/Post/Delete/<int:post_id>', methods=['GET', 'POST'])
+@login_required
 def deletePost(post_id):
     post_item = Post.query.get(post_id)
     db.session.delete(post_item)
@@ -201,9 +210,13 @@ def deletePost(post_id):
 def new():
     if request.method == 'POST':
         user = User(request.form['name'], request.form['login'], request.form['password'])
-        db.session.add(user)
-        db.session.commit()
-        return redirect(url_for('home'))
+        if user.login is None:
+            return render_template('new.html', error="Usuario Invalido")
+        else:
+            db.session.add(user)
+            db.session.commit()
+            return redirect(url_for('home'))
+
     return render_template('new.html')
 
 
@@ -243,6 +256,7 @@ def updateAdmin(user_id):
 
 # criar instituição
 @app.route('/Instituicao/Create', methods=['GET', 'POST'])
+@login_required
 def createInstituicao():
     if request.method == 'GET':
         return render_template('instituicaoCreate.html')
@@ -254,6 +268,7 @@ def createInstituicao():
 
 # update instituição
 @app.route('/Instituicao/Update/<int:inst_id>', methods=['GET', 'POST'])
+@login_required
 def updateInstituicao(inst_id):
     inst_item = Instituicao.query.get(inst_id)
     if request.method == 'GET':
@@ -268,6 +283,7 @@ def updateInstituicao(inst_id):
 
 # deletar instituição
 @app.route('/Instituicao/Delete/<int:inst_id>', methods=['GET', 'POST'])
+@login_required
 def deleteInstituicao(inst_id):
     inst_item = Instituicao.query.get(inst_id)
     db.session.delete(inst_item)
@@ -285,6 +301,7 @@ def instituicao():
 
 # criar Função
 @app.route('/Funcao/Create', methods=['GET', 'POST'])
+@login_required
 def createfuncao():
     if request.method == 'GET':
         return render_template('funcaoCreate.html')
@@ -296,6 +313,7 @@ def createfuncao():
 
 # update função
 @app.route('/Funcao/Update/<int:func_id>', methods=['GET', 'POST'])
+@login_required
 def updatefuncao(func_id):
     func_item = Funcao.query.get(func_id)
     if request.method == 'GET':
@@ -308,6 +326,7 @@ def updatefuncao(func_id):
 
 # deletar função
 @app.route('/Funcao/Delete/<int:func_id>', methods=['GET', 'POST'])
+@login_required
 def deletefuncao(func_id):
     func_item = Funcao.query.get(func_id)
     db.session.delete(func_item)
@@ -325,6 +344,7 @@ def funcao():
 
 # criar Equipamento
 @app.route('/Equipamento/Create', methods=['GET', 'POST'])
+@login_required
 def createequipamento():
     if request.method == 'GET':
         return render_template('equipamentoCreate.html')
@@ -336,6 +356,7 @@ def createequipamento():
 
 # update Equipamento
 @app.route('/Equipamento/Update/<int:equip_id>', methods=['GET', 'POST'])
+@login_required
 def updateequipamento(equip_id):
     equip_item = Equipamento.query.get(equip_id)
     if request.method == 'GET':
@@ -348,6 +369,7 @@ def updateequipamento(equip_id):
 
 # deletar Equipamento
 @app.route('/Equipamento/Delete/<int:equip_id>', methods=['GET', 'POST'])
+@login_required
 def deleteequipamento(equip_id):
     equip_item = Equipamento.query.get(equip_id)
     db.session.delete(equip_item)
@@ -358,6 +380,7 @@ def deleteequipamento(equip_id):
 # listar Equipamento
 @app.route('/Equipamento/')
 @login_required
+@login_required
 def equipamento():
     return render_template('Equipamento.html',
                            equips=Equipamento.query.all())
@@ -365,6 +388,7 @@ def equipamento():
 
 # criar Categoria
 @app.route('/Categoria/Create', methods=['GET', 'POST'])
+@login_required
 def createcategoria():
     if request.method == 'GET':
         return render_template('categoriaCreate.html')
@@ -376,6 +400,7 @@ def createcategoria():
 
 # update Categoria
 @app.route('/Categoria/Update/<int:cat_id>', methods=['GET', 'POST'])
+@login_required
 def updatecategoria(cat_id):
     cat_item = Categoria.query.get(cat_id)
     if request.method == 'GET':
@@ -388,6 +413,7 @@ def updatecategoria(cat_id):
 
 # deletar Categoria
 @app.route('/Categoria/Delete/<int:cat_id>', methods=['GET', 'POST'])
+@login_required
 def deletecategoria(cat_id):
     cat_item = Categoria.query.get(cat_id)
     db.session.delete(cat_item)
@@ -401,9 +427,6 @@ def deletecategoria(cat_id):
 def categoria():
     return render_template('Categoria.html',
                            cats=Categoria.query.all())
-
-
-# ------------------------------
 
 
 # criar Ordem
@@ -421,6 +444,7 @@ def createordem():
 
 # update ordem
 @app.route('/Ordem/Update/<int:ordem_id>', methods=['GET', 'POST'])
+@login_required
 def updateordem(ordem_id):
     ordem_item = Ordem.query.get(ordem_id)
     if request.method == 'GET':
@@ -438,6 +462,7 @@ def updateordem(ordem_id):
 
 # deletar Ordem
 @app.route('/Ordem/Delete/<int:ordem_id>', methods=['GET', 'POST'])
+@login_required
 def deleteordem(ordem_id):
     ordem_item = Ordem.query.get(ordem_id)
     db.session.delete(ordem_item)
@@ -454,7 +479,8 @@ def ordem():
 
 
 # pegar ordens até dia
-@app.route('/Ordem/Report/<int:dias>',methods=['GET','POST'])
+@app.route('/Ordem/Report/<int:dias>',methods=['GET', 'POST'])
+@login_required
 def OrdemReport(dias):
     ate = datetime.now().replace(second=0, microsecond=0) - timedelta(days=dias)
     de = datetime.now().replace(second=0, microsecond=0)
@@ -469,7 +495,8 @@ def OrdemReport(dias):
 
 
 # pegar ordens baseado em Instituição
-@app.route('/Ordem/Report/Instituicao/<int:dias>',methods=['GET','POST'])
+@app.route('/Ordem/Report/Instituicao/<int:dias>',methods=['GET', 'POST'])
+@login_required
 def OrdemReportInst(dias):
     insts = Instituicao.query.all()
     ate = datetime.now().replace(second=0, microsecond=0) - timedelta(days=dias)
@@ -486,6 +513,7 @@ def OrdemReportInst(dias):
 
 # pegar ordens baseado em Categoria
 @app.route('/Ordem/Report/Categoria/<int:dias>',methods=['GET','POST'])
+@login_required
 def OrdemReportCat(dias):
     cats = Categoria.query.all()
     ate = datetime.now().replace(second=0, microsecond=0) - timedelta(days=dias)
@@ -502,6 +530,7 @@ def OrdemReportCat(dias):
 
 # pegar ordens baseado em Função
 @app.route('/Ordem/Report/Funcao/<int:dias>',methods=['GET','POST'])
+@login_required
 def OrdemReportFunc(dias):
     funcs = Funcao.query.all()
     ate = datetime.now().replace(second=0, microsecond=0) - timedelta(days=dias)
@@ -518,6 +547,7 @@ def OrdemReportFunc(dias):
 
 # pegar ordens baseado em Equipamento
 @app.route('/Ordem/Report/Equipamento/<int:dias>',methods=['GET','POST'])
+@login_required
 def OrdemReportEquip(dias):
     equips = Equipamento.query.all()
     ate = datetime.now().replace(second=0, microsecond=0) - timedelta(days=dias)
@@ -528,6 +558,22 @@ def OrdemReportEquip(dias):
      reports = Ordem.query.filter(Ordem.data > ate)
     if request.method == 'GET':
         html = render_template("ordemEquipReport.html", reports=reports, dias=dias,ate=ate,de=de,equips=equips)
+        return render_pdf(HTML(string=html))
+    return redirect(url_for('home'))
+
+
+# pegar posts
+@app.route('/Post/Report/<int:dias>', methods=['GET', 'POST'])
+@login_required
+def PostReportEquip(dias):
+    ate = datetime.now().replace(second=0, microsecond=0) - timedelta(days=dias)
+    de = datetime.now().replace(second=0, microsecond=0)
+    if ate == de:
+        posts = Post.query.order_by(Post.data.desc()).all()
+    else:
+        posts = Post.query.order_by(Post.data.desc()).filter(Post.data > ate)
+    if request.method == 'GET':
+        html = render_template("postReport.html", posts=posts, dias=dias,ate=ate,de=de)
         return render_pdf(HTML(string=html))
     return redirect(url_for('home'))
 
@@ -543,8 +589,9 @@ def login():
     password = request.form['password']
     registered_user = User.query.filter_by(login=login, password=password).first()
     if registered_user is None:
-        flash('Usuario ou senha invalido', 'error')
-        return redirect(url_for('login'))
+        flash('Usuario ou senha invalido')
+        error = 'Usuario ou senha invalido'
+        return render_template('login.html',error=error)
     login_user(registered_user)
     flash('Login Realizado')
     return redirect(request.args.get('next') or url_for('home'))

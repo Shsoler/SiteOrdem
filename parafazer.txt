@@ -1,95 +1,98 @@
 criar:
-	CRUD
+	XCRUD
 	X	Post
 	X		Data
 	X		Titulo
 	X		Descriçao
 
 
-	CRUD
+	XCRUD
 		XUser - Administrado
 			xid
 			xname
 			xlogin
 			xpassword
-		Instituição
-			id
-			nome
-			tel
-			end
-		Função
-			id
-			Descrição
-		Equipamento
-			id
-			Descrição
-		Categoria
-			id
-			Descrição
-		Ordem
-			id
-			Instituição
-			Funcionario
-			Categoria
-			Descrição
-			Equipamento
-			Data
-	Index
-		Menu
-			login
-			criar ordem
-			exibir posts
+		XInstituição
+			Xid
+			Xnome
+			Xtel
+			Xend
+		XFunção
+			Xid
+			XDescrição
+		XEquipamento
+			Xid
+			XDescrição
+		Xategoria
+			Xid
+			XDescrição
+		XOrdem
+			Xid
+			XInstituição
+			XFuncionario
+			XCategoria
+			XDescrição
+			XEquipamento
+			XData
+	XIndex
+		XMenu
+			Xlogin
+			Xcriar ordem
+			Xexibir posts
 
 	AJEITAR PAGINA
-		ajeitar nomes
+		Xajeitar nomes
 			X/Admin @login
 			X/Admin/Create @login
 			X/Admin/Update/<> @login
 			X/Admin/Delete/<> @login
 			X/Home = /Index
-			X/Post @login propria page home acima
+			X/Post propria page home acima
 			X/Post/Update/<> @login
 			X/Post/Delete/<> @login
-			/Instituicao @login
-			/Instituicao/Create @login
-			/Instituicao/Update/<> @login
-			/Funcao @login
-			/Funcao/Create @login
-			/Funcao/Update/<> @login
-			/Equipamento @login
-			/Equipamento/Create @login
-			/Equipamento/Update/<> @login
-			/Categoria @login
-			/Categoria/Create @login
-			/Categoria/Update/<> @login
-			/Ordem
-			/Ordem/List	@login
-			/Ordem/Update/<> @login
+			X/Instituicao @login
+			X/Instituicao/Create @login
+			X/Instituicao/Update/<> @login
+			X/Funcao @login
+			X/Funcao/Create @login
+			X/Funcao/Update/<> @login
+			X/Equipamento @login
+			X/Equipamento/Create @login
+			X/Equipamento/Update/<> @login
+			x/Categoria @login
+			X/Categoria/Create @login
+			X/Categoria/Update/<> @login
+			X/Ordem
+			X/Ordem/List	@login
+			x/Ordem/Update/<> @login
 			
-	Relatorio
-		Instituicao
-			Sempre
-			Ano
-			Mes
-		Função
-			Sempre
-			Ano
-			Mes
-		Equipamento
-			Sempre
-			Ano
-			Mes
-		Categoria
-			Sempre
-			Ano
-			Mes
-		Ordem
-			Sempre
-			Ano
-				
-			Mes
-		Post
-			Sempre
-			Ano
-			Mes
-
+	XRelatorio
+		XInstituicao
+			XSempre
+			XAno
+			XMes
+		XFunção
+			XSempre
+			XAno
+			XMes
+		XEquipamento
+			XSempre
+			XAno
+			XMes
+		XCategoria
+			XSempre
+			XAno
+			XMes
+		XOrdem
+			XSempre
+			XAno	
+			XMes
+		XPost
+			XSempre
+			XAno
+			XMes
+		Mensagens de erro e verificações:
+			Verificar vazio;
+			Verificar Numero;
+			Verificar duplicidade;
+			Mensagem erro login;

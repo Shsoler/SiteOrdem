@@ -22,7 +22,7 @@
         <div class="panel-body">{{ ordem.descricao}}</div>
         <div class="panel-footer">
             <div class="row">
-                <div class="col-sm-6">{{ ordem.data }}</div>
+                <div class="col-sm-6">{{ ordem.data.replace( microsecond=0) }}</div>
                 <div class="col-sm-6"><a href="/Ordem/Delete/{{ ordem._id}}">Excluir</a></div>
             </div>
         </div>

@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
   <form action="" method=post class="form-horizontal">
-    <h2>Atualizar Administrador</h2>
+    <h2>Atualizar Post</h2>
     <div class="control-group">
         <div class="controls">
           <input type="text" id="titulo" name="titulo" class="input-xlarge"
@@ -12,16 +12,15 @@
  
     <div class="control-group">
         <div class="controls">
-          <input type="textarea" id="descricao" name="descricao" class="input-xlarge"
-            placeholder="Descricao" value="{{ post.descricao }}"
-            required>
+          <textarea id="descricao" name="descricao" class="input-xlarge"
+            cols="100" rows="20"
+            required>{{ post.descricao }}</textarea>
         </div>
     </div>
   
     <div class="control-group">
         <div class="controls">
           <button type="submit" class="btn btn-success">Atualizar</button>
-          <a href="{{ url_for('home') }}">Voltar</a>
         </div>
     </div>
   </form>

@@ -2,10 +2,10 @@
 {% block body %}
 			<form>
 				<div id="main" class="container">
-				    <h2>Noticias</h2>
+				    <h1>Noticias</h1>
 					    {%- for post in posts %}
 					        <th><h2 class="blog-post-title">{{post.titulo}}</h2>
-					        	<p class="blog-post-meta">{{ post.data}}<p>
+					        	<p class="blog-post-meta">{{ post.data.replace( microsecond=0)}}<p>
 					        	 {% if g.user.is_authenticated%}
 					        	 <table>
 					        	 	<tr>
@@ -25,8 +25,6 @@
 					        	<p>{{ post.descricao }}</p>
 					        <hr>
 					     {%- endfor %}
-				    <p>
-				      <a href="{{ url_for('newpost') }}" class="btn btn-large btn-primary">Novo Post</a>
 				</div>
 			</form>
 {% endblock %}

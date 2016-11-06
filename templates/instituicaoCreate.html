@@ -14,7 +14,7 @@
     <div class="control-group">
         <div class="controls">
           <input type="text" id="telefone" name="telefone" class="input-xlarge"
-            placeholder="telefone" value ="{{ request.form.telefone }}"
+            placeholder="telefone" pattern="([0-9]){11}" value ="{{ request.form.telefone }}"
             required>
         </div>
     </div>
@@ -29,7 +29,6 @@
     <div class="control-group">
         <div class="controls">
           <button type="submit" class="btn btn-success">Atualizar</button>
-          <a href="{{ url_for('instituicao') }}">Voltar</a>
         </div>
     </div>
   </form>

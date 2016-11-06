@@ -13,7 +13,7 @@
 					    	<tr>
 					    {%- for post in posts %}
 					        <th>{{post.titulo}}
-					        <td>{{ post.data}}
+					        <td>{{ post.data.replace(microsecond=0)}}
 					        <td >{{ post.descricao }}
 					     {%- endfor %}
 				  		</tr>

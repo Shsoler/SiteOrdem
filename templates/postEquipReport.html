@@ -5,11 +5,11 @@
 <body>
     <h1>Ordens Geradas nos ultimo - {{ dias }} dias</h1>
     <h2>de {{ de }} até {{ ate }}</h2>
-    {% for ordem in reports %}
+    {% for post in posts%}
      <table>
         <tr>
-            <td>ID: {{ ordem._id }}</td>
-            <td>&emsp;Data: {{ ordem.data.replace( microsecond=0) }}</td>
+            <td>ID: {{ post._id }}</td>
+            <td>&emsp;Data: {{ post.data.replace( microsecond=0) }}</td>
         </tr>
          <hr>
         <tr>

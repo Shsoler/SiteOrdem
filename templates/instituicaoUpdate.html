@@ -21,7 +21,7 @@
     <div class="control-group">
         <div class="controls">
           <input type="text" id="end" name="end" class="input-xlarge"
-            placeholder="Endereço" value="{{ inst.end }}"
+            placeholder="Endereço" pattern="([0-9]){11}" value="{{ inst.end }}"
             required>
         </div>
     </div>
@@ -30,7 +30,6 @@
     <div class="control-group">
         <div class="controls">
           <button type="submit" class="btn btn-success">Atualizar</button>
-          <a href="{{ url_for('instituicao') }}">Voltar</a>
         </div>
     </div>
   </form>
