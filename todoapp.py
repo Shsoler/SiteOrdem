@@ -1,7 +1,8 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask import Flask, request, flash, url_for, redirect, render_template, abort, g
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager, login_user, logout_user, current_user, login_required
+
 
 app = Flask(__name__)
 
@@ -452,7 +453,16 @@ def ordem():
                            ordens=Ordem.query.all())
 
 
-# -------------------------------
+# pegar ordens até dia
+@app.route('/Ordem/Report/<int:dias>',methods=['GET','POST'])
+def OrdemReport(dias):
+    ate = datetime.now().replace(second=0, microsecond=0) - timedelta(days=dias)
+    de = datetime.now().replace(second=0, microsecond=0)
+    reports = Ordem.query.filter(Ordem.data > ate)
+    if request.method == 'GET':
+        return render_template("ordemReport.html", reports=reports, dias=dias,ate=ate,de=de)
+    return redirect(url_for('home'))
+
 
 # logar
 @app.route('/Login', methods=['GET', 'POST'])
@@ -470,6 +480,7 @@ def login():
     login_user(registered_user)
     flash('Login Realizado')
     return redirect(request.args.get('next') or url_for('home'))
+
 
 
 # deslogar

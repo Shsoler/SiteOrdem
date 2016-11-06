@@ -1,0 +1,28 @@
+<html>
+<head>
+    <meta charset="utf-8">
+</head>
+    <h1>Ordens Geradas nos ultimo - {{ dias }} dias</h1>
+    <h2>de {{ de }} até {{ ate }}</h2>
+    {% for ordem in reports %}
+     <table>
+        <tr>
+            <td>ID: {{ ordem._id }}</td>
+            <td>&emsp;Data: {{ ordem.data }}</td>
+        </tr>
+         <hr>
+        <tr>
+            <td>Instituição: {{ ordem.instituicao.nome }}</td>
+            <td>&emsp;Função: {{ ordem.funcao.descricao }}</td>
+        </tr>
+         <hr>
+        <tr>
+            <td> Categoria: {{ ordem.categoria.descricao }}</td>
+            <td>&emsp; Equipamento: {{ ordem.equipamento.descricao }}</td>
+        </tr>
+     </table>
+        <hr>
+        <p >{{ ordem.descricao }}</p>
+        <hr><hr>
+    {% endfor %}
+</html>
